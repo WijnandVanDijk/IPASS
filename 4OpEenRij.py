@@ -5,7 +5,7 @@ aantal_kolommen = 7
 
 
 def maak_bord():
-    bord = np.zeros((6, 7))  # np.zeros maakt een matrix aan gevuld met nullen
+    bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
     return bord
 
 
@@ -14,7 +14,7 @@ def leg_steen(bord, rij, kolom, steen):
 
 
 def geldige_locatie(bord, kolom):
-    return bord[5][kolom] == 0
+    return bord[aantal_rijen - 1][kolom] == 0
 
 
 def volgende_open_rij(bord, kolom):
@@ -25,6 +25,28 @@ def volgende_open_rij(bord, kolom):
 
 def print_bord(bord):
     print(np.flip(bord, 0))
+
+
+def winnende_zet(bord, steen):
+    for c in range(aantal_kolommen - 3):
+        for r in range(aantal_rijen):
+            if bord[r][c] == steen and bord[r][c + 1] == steen and bord[r][c + 2] == steen and bord[r][c + 3] == steen:
+                return True
+
+    for c in range(aantal_kolommen):
+        for r in range(aantal_rijen - 3):
+            if bord[r][c] == steen and bord[r + 1][c] == steen and bord[r + 2][c] == steen and bord[r + 3][c] == steen:
+                return True
+
+    for c in range(aantal_kolommen - 3):
+        for r in range(aantal_rijen - 3):
+            if bord[r][c] == steen and bord[r + 1][c + 1] == steen and bord[r + 2][c + 2] == steen and bord[r + 3][c + 3] == steen:
+                return True
+
+    for c in range(aantal_kolommen - 3):
+        for r in range(3, aantal_rijen):
+            if bord[r][c] == steen and bord[r - 1][c + 1] == steen and bord[r - 2][c + 2] == steen and bord[r - 3][c + 3] == steen:
+                return True
 
 
 bord = maak_bord()
