@@ -1,10 +1,6 @@
-# -----#-----#-----#-----#-----#-----#IMPORTS#-----#-----#-----#-----#-----#-----#
-
 import numpy as np
 import pygame
 import sys
-
-# -----#-----#-----#-----#-----#-----#GAME#-----#-----#-----#-----#-----#-----#
 
 aantal_rijen = 6
 aantal_kolommen = 7
@@ -60,6 +56,19 @@ print_bord(bord)
 game_over = False
 beurd = 0
 
+# GUI
+pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
+squaresize = 100  # in pixels
+
+breedte = aantal_kolommen * squaresize
+hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
+
+size = (breedte, hoogte)
+
+GUI = pygame.display.set_mode(size)
+# GUI
+
+
 while not game_over:
 
     for event in pygame.event.get():
@@ -96,19 +105,6 @@ while not game_over:
 
             beurd += 1
             beurd = beurd % 2
-
-
-# -----#-----#-----#-----#-----#-----#GUI#-----#-----#-----#-----#-----#-----#
-
-pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
-squaresize = 100  # in pixels
-
-breedte = aantal_kolommen * squaresize
-hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
-
-size = (breedte, hoogte)
-
-GUI = pygame.display.set_mode(size)
 
 
 def teken_bord(bord):
