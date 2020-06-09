@@ -63,6 +63,10 @@ while not game_over:
             rij = volgende_open_rij(bord, kolom)
             leg_steen(bord, rij, kolom, 1)
 
+            if winnende_zet(bord, 1):
+                print("Speler 1 wint!")
+                game_over = True
+
     # Vraag speler 2 input
     else:
         kolom = int(input("Speler 2 maak jouw selectie (0-6): "))
@@ -70,6 +74,10 @@ while not game_over:
         if geldige_locatie(bord,kolom):
             rij = volgende_open_rij(bord, kolom)
             leg_steen(bord, rij, kolom, 2)
+
+            if winnende_zet(bord, 2):
+                print("Speler 2 wint!")
+                game_over = True
 
     print_bord(bord)
 
