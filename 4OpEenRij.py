@@ -1,4 +1,10 @@
+# -----#-----#-----#-----#-----#-----#IMPORTS#-----#-----#-----#-----#-----#-----#
+
 import numpy as np
+import pygame
+import sys
+
+# -----#-----#-----#-----#-----#-----#GAME#-----#-----#-----#-----#-----#-----#
 
 aantal_rijen = 6
 aantal_kolommen = 7
@@ -55,32 +61,55 @@ game_over = False
 beurd = 0
 
 while not game_over:
-    # Vraag speler 1 input
-    if beurd == 0:
-        kolom = int(input("Speler 1 maak jouw selectie (0-6): "))
 
-        if geldige_locatie(bord,kolom):
-            rij = volgende_open_rij(bord, kolom)
-            leg_steen(bord, rij, kolom, 1)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
 
-            if winnende_zet(bord, 1):
-                print("Speler 1 wint!")
-                game_over = True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("")
+            # Vraag speler 1 input
+            if beurd == 0:
+                #kolom = int(input("Speler 1 maak jouw selectie (0-6): "))
 
-    # Vraag speler 2 input
-    else:
-        kolom = int(input("Speler 2 maak jouw selectie (0-6): "))
+                if geldige_locatie(bord, kolom):
+                    rij = volgende_open_rij(bord, kolom)
+                    leg_steen(bord, rij, kolom, 1)
 
-        if geldige_locatie(bord,kolom):
-            rij = volgende_open_rij(bord, kolom)
-            leg_steen(bord, rij, kolom, 2)
+                    if winnende_zet(bord, 1):
+                        print("Speler 1 wint!")
+                        game_over = True
 
-            if winnende_zet(bord, 2):
-                print("Speler 2 wint!")
-                game_over = True
+            # Vraag speler 2 input
+            else:
+                #kolom = int(input("Speler 2 maak jouw selectie (0-6): "))
 
-    print_bord(bord)
+                if geldige_locatie(bord, kolom):
+                    rij = volgende_open_rij(bord, kolom)
+                    leg_steen(bord, rij, kolom, 2)
 
-    beurd += 1
-    beurd = beurd % 2
+                    if winnende_zet(bord, 2):
+                        print("Speler 2 wint!")
+                        game_over = True
 
+            print_bord(bord)
+
+            beurd += 1
+            beurd = beurd % 2
+
+
+# -----#-----#-----#-----#-----#-----#GUI#-----#-----#-----#-----#-----#-----#
+
+pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
+squaresize = 100  # in pixels
+
+breedte = aantal_kolommen * squaresize
+hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
+
+size = (breedte, hoogte)
+
+GUI = pygame.display.set_mode(size)
+
+
+def teken_bord(bord):
+    pass
