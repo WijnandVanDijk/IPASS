@@ -6,6 +6,7 @@ aantal_rijen = 6
 aantal_kolommen = 7
 
 
+
 def maak_bord():
     bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
     return bord
@@ -69,6 +70,21 @@ GUI = pygame.display.set_mode(size)
 # GUI
 
 
+PURPLE = (138, 43, 226)
+BLACK = (0, 0, 0)
+radius = int(squaresize/2)
+
+
+def teken_bord(bord):
+    for i in range(aantal_kolommen):
+        for j in range(aantal_kolommen):
+            pygame.draw.rect(GUI, PURPLE, (i*squaresize, j*squaresize+squaresize, squaresize, squaresize)) # niet werkend
+            pygame.draw.circle(GUI, BLACK, (i*squaresize+squaresize, j*squaresize+squaresize), radius) # niet werkend
+
+
+teken_bord(bord)
+pygame.display.update()
+
 while not game_over:
 
     for event in pygame.event.get():
@@ -79,7 +95,7 @@ while not game_over:
             print("")
             # Vraag speler 1 input
             if beurd == 0:
-                #kolom = int(input("Speler 1 maak jouw selectie (0-6): "))
+                kolom = int(input("Speler 1 maak jouw selectie (0-6): "))
 
                 if geldige_locatie(bord, kolom):
                     rij = volgende_open_rij(bord, kolom)
@@ -91,7 +107,7 @@ while not game_over:
 
             # Vraag speler 2 input
             else:
-                #kolom = int(input("Speler 2 maak jouw selectie (0-6): "))
+                kolom = int(input("Speler 2 maak jouw selectie (0-6): "))
 
                 if geldige_locatie(bord, kolom):
                     rij = volgende_open_rij(bord, kolom)
@@ -105,7 +121,3 @@ while not game_over:
 
             beurd += 1
             beurd = beurd % 2
-
-
-def teken_bord(bord):
-    pass
