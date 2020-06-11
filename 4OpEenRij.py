@@ -72,14 +72,14 @@ GUI = pygame.display.set_mode(size)
 
 PURPLE = (138, 43, 226)
 BLACK = (0, 0, 0)
-radius = int(squaresize/2)
+radius = int(squaresize/2 - 3)
 
 
 def teken_bord(bord):
     for i in range(aantal_kolommen):
         for j in range(aantal_kolommen):
-            pygame.draw.rect(GUI, PURPLE, (i*squaresize, j*squaresize+squaresize, squaresize, squaresize)) # niet werkend
-            pygame.draw.circle(GUI, BLACK, (i*squaresize+squaresize, j*squaresize+squaresize), radius) # niet werkend
+            pygame.draw.rect(GUI, PURPLE, (i*squaresize, j*squaresize+squaresize, squaresize, squaresize))
+            pygame.draw.circle(GUI, BLACK, (int(i*squaresize+squaresize/2), int(j*squaresize+squaresize/2)), radius)
 
 
 teken_bord(bord)
@@ -92,8 +92,9 @@ while not game_over:
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print("")
+            print(event.pos)
             # Vraag speler 1 input
+            """
             if beurd == 0:
                 kolom = int(input("Speler 1 maak jouw selectie (0-6): "))
 
@@ -121,3 +122,4 @@ while not game_over:
 
             beurd += 1
             beurd = beurd % 2
+            """
