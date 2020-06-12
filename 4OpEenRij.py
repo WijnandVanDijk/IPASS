@@ -66,7 +66,7 @@ hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
 
 size = (breedte, hoogte)
 
-GUI = pygame.display.set_mode(size)
+Gamescherm = pygame.display.set_mode(size)
 # GUI
 
 
@@ -78,8 +78,8 @@ radius = int(squaresize/2 - 3)
 def teken_bord(bord):
     for i in range(aantal_kolommen):
         for j in range(aantal_kolommen):
-            pygame.draw.rect(GUI, PURPLE, (i*squaresize, j*squaresize+squaresize, squaresize, squaresize))
-            pygame.draw.circle(GUI, BLACK, (int(i*squaresize+squaresize/2), int(j*squaresize+squaresize/2)), radius)
+            pygame.draw.rect(Gamescherm, PURPLE, (i*squaresize, j*squaresize+squaresize, squaresize, squaresize))
+            pygame.draw.circle(Gamescherm, BLACK, (int(i*squaresize+squaresize/2), int(j*squaresize+squaresize/2)), radius)
 
 
 teken_bord(bord)
