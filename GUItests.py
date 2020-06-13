@@ -56,11 +56,11 @@ def main_menu():
         if button_quit.collidepoint((mx, my)):
             if click:
                 quit()
-        pygame.draw.rect(screen, (138, 43, 226), button_play)
-        pygame.draw.rect(screen, (138, 43, 226), button_overons)
-        pygame.draw.rect(screen, (138, 43, 226), button_options)
-        pygame.draw.rect(screen, (138, 43, 226), button_weetjes)
-        pygame.draw.rect(screen, (138, 43, 226), button_quit)
+        pygame.draw.rect(screen, (75, 0, 130), button_play)
+        pygame.draw.rect(screen, (75, 0, 130), button_overons)
+        pygame.draw.rect(screen, (75, 0, 130), button_options)
+        pygame.draw.rect(screen, (75, 0, 130), button_weetjes)
+        pygame.draw.rect(screen, (75, 0, 130), button_quit)
 
 
         click = False
