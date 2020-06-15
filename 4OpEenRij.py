@@ -36,38 +36,45 @@ def connectfour():
     def winnende_zet(bord, steen):
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen):
-                if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][k + 3] == steen:
+                if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
+                    k + 3] == steen:
                     return True
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen - 3):
-                if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][k] == steen:
+                if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
+                    k] == steen:
                     return True
 
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen - 3):
-                if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][k + 3] == steen:
+                if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
+                    k + 3] == steen:
                     return True
 
         for k in range(aantal_kolommen - 3):
             for r in range(3, aantal_rijen):
-                if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][k + 3] == steen:
+                if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
+                    k + 3] == steen:
                     return True
 
     def teken_bord(bord):
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, PURPLE, (k * squaresize, r * squaresize+squaresize, squaresize, squaresize))
-                pygame.draw.circle(Gamescherm, BLACK, (int(k * squaresize + squaresize/2), int(r * squaresize + squaresize + squaresize/2)), radius)
+                pygame.draw.rect(Gamescherm, PURPLE,
+                                 (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
+                pygame.draw.circle(Gamescherm, BLACK, (
+                    int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
                 if bord[r][k] == 1:
-                    pygame.draw.circle(Gamescherm, RED, (int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
+                    pygame.draw.circle(Gamescherm, RED, (
+                        int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
                 elif bord[r][k] == 2:
-                    pygame.draw.circle(Gamescherm, YELLOW, (int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
+                    pygame.draw.circle(Gamescherm, YELLOW, (
+                        int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
         pygame.display.update()
-
 
     bord = maak_bord()
     print_bord(bord)
@@ -110,7 +117,7 @@ def connectfour():
                 pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
                 if beurd == 0:
                     posx = event.pos[0]
-                    kolom = int(math.floor(posx/squaresize))
+                    kolom = int(math.floor(posx / squaresize))
 
                     if geldige_locatie(bord, kolom):
                         rij = volgende_open_rij(bord, kolom)
@@ -123,7 +130,7 @@ def connectfour():
 
                 else:
                     posx = event.pos[0]
-                    kolom = int(math.floor(posx/squaresize))
+                    kolom = int(math.floor(posx / squaresize))
 
                     if geldige_locatie(bord, kolom):
                         rij = volgende_open_rij(bord, kolom)
@@ -147,11 +154,10 @@ def connectfour():
 
 
 def gui():
-
     mainClock = pygame.time.Clock()
 
     pygame.init()
-    pygame.display.set_caption('game base')
+    pygame.display.set_caption('Hogeschool Utrecht IPASS Connect Four project, Wijnand van Dijk')
     screen = pygame.display.set_mode((960, 494), 0, 32)
 
     font = pygame.font.SysFont(None, 20)
@@ -170,7 +176,7 @@ def gui():
             screen.fill((0, 0, 0))
             draw_text('Connect Four', font, (255, 255, 255), screen, 430, 20)
             draw_text('Play', font, (255, 255, 255), screen, 90, 385)
-            draw_text('Over ons', font, (255, 255, 255), screen, 263, 385)
+            draw_text('Over mij', font, (255, 255, 255), screen, 263, 385)
             draw_text('Weetjes', font, (255, 255, 255), screen, 455, 385)
             draw_text('Options', font, (255, 255, 255), screen, 645, 385)
             draw_text('Quit', font, (255, 255, 255), screen, 845, 385)
@@ -196,7 +202,7 @@ def gui():
                     options()
             if button_quit.collidepoint((mx, my)):
                 if click:
-                    quit()
+                    sluiten()
             pygame.draw.rect(screen, (75, 0, 130), button_play)
             pygame.draw.rect(screen, (75, 0, 130), button_overons)
             pygame.draw.rect(screen, (75, 0, 130), button_options)
@@ -224,7 +230,26 @@ def gui():
         while running:
             screen.fill((0, 0, 0))
 
-            draw_text('Over ons', font, (255, 255, 255), screen, 430, 20)
+            draw_text('Over mij', font, (255, 255, 255), screen, 430, 20)
+            draw_text("Hallo, ik ben Wijnand van Dijk maker en bedenker van dit project en eerste jaars artificial intelligence"
+                      " student aan de Hogeschool Utrecht.",
+                      font, (255, 255, 255), screen, 50, 70)
+            draw_text("Voor mijn studie moest is ik een eindproject maken als laatste test om over te mogen naar het "
+                      "volgende jaar.",
+                      font, (255, 255, 255), screen, 50, 90)
+            draw_text("Ik heb voor deze studie gekozen omdat ik altijd al een jongen ben geweest van de technologie en de toekomst.",
+                      font, (255, 255, 255), screen, 50, 110)
+            draw_text("door die redenen ben ik opzoek gegaan naar een studie waar die twee aspecten in voor komen, en wat is beter dan",
+                      font, (255, 255, 255), screen, 50, 130)
+            draw_text("de ICT en vooral de AI richting? Ik ben deze opleiding begonnen met minimale voorkennis over programmeren en ICT in het algemeen",
+                      font, (255, 255, 255), screen, 50, 150)
+            draw_text("Toen ik op dit onderwerp was gekomen wist ik meteen dat dit het zou worden omdat er een mooie AI"
+                      "tegestander gemaakt kan worden",
+                      font, (255, 255, 255), screen, 50, 190)
+            draw_text("voor Connect Four ook wel bekend als vier op een rij. Nadat ik zeker wist dat dit mijn onderwerp ging worden ben ik gelijk op onderzoek",
+                      font, (255, 255, 255), screen, 50, 210)
+            draw_text("uit gegaan met het doel om de geschiedenis van Connect Four te weten (zie 'Weetjes') en een algoritme te vinden voor de AI-opponent.",
+                      font, (255, 255, 255), screen, 50, 230)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -270,7 +295,7 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def quit():
+    def sluiten():
         running = True
         while running:
             screen.fill((0, 0, 0))
@@ -278,8 +303,7 @@ def gui():
             pygame.display.quit()
             pygame.quit()
 
-
-
     main_menu()
+
 
 gui()
