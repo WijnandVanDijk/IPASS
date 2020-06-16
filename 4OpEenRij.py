@@ -4,13 +4,14 @@ import sys
 import math
 from pygame.locals import *
 
+PURPLE = (75, 0, 130)
+BLUE = (29, 172, 231)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
+
 
 def connectfour():
-
-    PURPLE = (75, 0, 130)
-    BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
-    YELLOW = (255, 255, 0)
 
     aantal_rijen = 6
     aantal_kolommen = 7
@@ -61,7 +62,7 @@ def connectfour():
     def teken_bord(bord):
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, PURPLE,
+                pygame.draw.rect(Gamescherm, BLUE,
                                  (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
                 pygame.draw.circle(Gamescherm, BLACK, (
                     int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
@@ -173,8 +174,12 @@ def gui():
     def main_menu():
         while True:
 
+
+            background = pygame.image.load('download.png')
+
             screen.fill((0, 0, 0))
-            draw_text('Connect Four', font, (255, 255, 255), screen, 430, 20)
+            screen.blit(background, (338, 10))
+            draw_text('', font, (255, 255, 255), screen, 430, 20)
             draw_text('Play', font, (255, 255, 255), screen, 90, 385)
             draw_text('Over mij', font, (255, 255, 255), screen, 263, 385)
             draw_text('Weetjes', font, (255, 255, 255), screen, 455, 385)
@@ -203,11 +208,11 @@ def gui():
             if button_quit.collidepoint((mx, my)):
                 if click:
                     sluiten()
-            pygame.draw.rect(screen, (75, 0, 130), button_play)
-            pygame.draw.rect(screen, (75, 0, 130), button_overons)
-            pygame.draw.rect(screen, (75, 0, 130), button_options)
-            pygame.draw.rect(screen, (75, 0, 130), button_weetjes)
-            pygame.draw.rect(screen, (75, 0, 130), button_quit)
+            pygame.draw.rect(screen, BLUE, button_play)
+            pygame.draw.rect(screen, BLUE, button_overons)
+            pygame.draw.rect(screen, BLUE, button_options)
+            pygame.draw.rect(screen, BLUE, button_weetjes)
+            pygame.draw.rect(screen, BLUE, button_quit)
 
             click = False
             for event in pygame.event.get():
