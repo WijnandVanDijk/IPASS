@@ -9,9 +9,9 @@ BLUE = (29, 172, 231)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+WHITE = (255, 255, 255)
 
-
-def connectfour():
+def connectfour_no_ai():
 
     aantal_rijen = 6
     aantal_kolommen = 7
@@ -160,7 +160,6 @@ def gui():
     pygame.init()
     pygame.display.set_caption('Hogeschool Utrecht IPASS Connect Four project, Wijnand van Dijk')
     screen = pygame.display.set_mode((960, 494), 0, 32)
-
     font = pygame.font.SysFont(None, 20)
 
     def draw_text(text, font, color, surface, x, y):
@@ -175,16 +174,16 @@ def gui():
         while True:
 
 
-            background = pygame.image.load('download.png')
+            LOGO = pygame.image.load('background.png')
 
             screen.fill((0, 0, 0))
-            screen.blit(background, (338, 10))
-            draw_text('', font, (255, 255, 255), screen, 430, 20)
-            draw_text('Play', font, (255, 255, 255), screen, 90, 385)
-            draw_text('Over mij', font, (255, 255, 255), screen, 263, 385)
-            draw_text('Weetjes', font, (255, 255, 255), screen, 455, 385)
-            draw_text('Options', font, (255, 255, 255), screen, 645, 385)
-            draw_text('Quit', font, (255, 255, 255), screen, 845, 385)
+            screen.blit(LOGO, (338, 10))
+            draw_text('', font, WHITE, screen, 430, 20)
+            draw_text('Play', font, WHITE, screen, 90, 385)
+            draw_text('Over mij', font, WHITE, screen, 263, 385)
+            draw_text('Weetjes', font, WHITE, screen, 455, 385)
+            draw_text('Options', font, WHITE, screen, 645, 385)
+            draw_text('Quit', font, WHITE, screen, 845, 385)
 
             mx, my = pygame.mouse.get_pos()
 
@@ -195,7 +194,7 @@ def gui():
             button_quit = pygame.Rect(810, 400, 100, 50)
             if button_play.collidepoint((mx, my)):
                 if click:
-                    connectfour()
+                    connectfour_no_ai()
             if button_overons.collidepoint((mx, my)):
                 if click:
                     overons()
@@ -235,26 +234,26 @@ def gui():
         while running:
             screen.fill((0, 0, 0))
 
-            draw_text('Over mij', font, (255, 255, 255), screen, 430, 20)
+            draw_text('Over mij', font, WHITE, screen, 430, 20)
             draw_text("Hallo, ik ben Wijnand van Dijk maker en bedenker van dit project en eerste jaars artificial intelligence"
                       " student aan de Hogeschool Utrecht.",
-                      font, (255, 255, 255), screen, 50, 70)
+                      font, WHITE, screen, 50, 70)
             draw_text("Voor mijn studie moest is ik een eindproject maken als laatste test om over te mogen naar het "
                       "volgende jaar.",
-                      font, (255, 255, 255), screen, 50, 90)
+                      font, WHITE, screen, 50, 90)
             draw_text("Ik heb voor deze studie gekozen omdat ik altijd al een jongen ben geweest van de technologie en de toekomst.",
-                      font, (255, 255, 255), screen, 50, 110)
+                      font, WHITE, screen, 50, 110)
             draw_text("door die redenen ben ik opzoek gegaan naar een studie waar die twee aspecten in voor komen, en wat is beter dan",
-                      font, (255, 255, 255), screen, 50, 130)
+                      font, WHITE, screen, 50, 130)
             draw_text("de ICT en vooral de AI richting? Ik ben deze opleiding begonnen met minimale voorkennis over programmeren en ICT in het algemeen",
-                      font, (255, 255, 255), screen, 50, 150)
+                      font, WHITE, screen, 50, 150)
             draw_text("Toen ik op dit onderwerp was gekomen wist ik meteen dat dit het zou worden omdat er een mooie AI"
                       "tegestander gemaakt kan worden",
-                      font, (255, 255, 255), screen, 50, 190)
+                      font, WHITE, screen, 50, 190)
             draw_text("voor Connect Four ook wel bekend als vier op een rij. Nadat ik zeker wist dat dit mijn onderwerp ging worden ben ik gelijk op onderzoek",
-                      font, (255, 255, 255), screen, 50, 210)
+                      font, WHITE, screen, 50, 210)
             draw_text("uit gegaan met het doel om de geschiedenis van Connect Four te weten (zie 'Weetjes') en een algoritme te vinden voor de AI-opponent.",
-                      font, (255, 255, 255), screen, 50, 230)
+                      font, WHITE, screen, 50, 230)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -267,11 +266,39 @@ def gui():
             mainClock.tick(60)
 
     def weetjes():
+
         running = True
         while running:
-            screen.fill((0, 0, 0))
 
-            draw_text('Weetjes', font, (255, 255, 255), screen, 430, 20)
+            fact = pygame.image.load('fact.png')
+            win_lose = pygame.image.load('ScreenHunter 38.jpg')
+            screen.fill((0, 0, 0))
+            screen.blit(fact, (367.5, 10))
+            screen.blit(win_lose, (710, 250))
+
+
+
+            draw_text('', font, WHITE, screen, 430, 20)
+            draw_text("De geschiedenis:",
+                      font, WHITE, screen, 50, 130)
+            draw_text("Het spel werd voor het eerst officiiel uitgegeven als Connect Four in 1974 door spelfabrikant Milton Bradley,",
+                      font, WHITE, screen, 50, 150)
+            draw_text("tegenwoordig een onderdeel van spelfabrikant Hasbro. Voor die tijd was het spel al bekend als The Captain's Mistress.",
+                      font, WHITE, screen, 50, 170)
+            draw_text("In 1988, 14 jaar na de release, is het spel 'opgelost'. Een opgelost spel is een spel waarvan de uitkomst vanuit elke positie correct",
+                      font, WHITE, screen, 50, 190)
+            draw_text("kan worden voorspeld, ervan uitgaande dat beide spelers perfect spelen.",
+                      font, WHITE, screen, 50, 210)
+            draw_text("Als we ervan uitgaan dat beide spelen perfect spelen wint de middelste (vierde) rij, worden de derde en vijfde rij een gelijk spel en",
+                      font, WHITE, screen, 50, 230)
+            draw_text("verliezen de eerste, tweede, zesde en zevende rij.",
+                      font, WHITE, screen, 50, 250)
+            draw_text("Er zijn 4.531.985.219.092 mogelijk spel situaties, waarvan 1.905.333.170.621 een vier op een rij bevattten.",
+                      font, WHITE, screen, 50, 270)
+            draw_text("Er zijn 713.298.878 manieren om een vier op een rij bord weer te geven (qua steen posities)",
+                      font, WHITE, screen, 50, 290)
+            draw_text("Voor de bronnen raadpleeg de README.",
+                      font, WHITE, screen, 50, 400)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -288,7 +315,7 @@ def gui():
         while running:
             screen.fill((0, 0, 0))
 
-            draw_text('Options', font, (255, 255, 255), screen, 430, 20)
+            draw_text('Options', font, WHITE, screen, 430, 20)
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -303,10 +330,10 @@ def gui():
     def sluiten():
         running = True
         while running:
-            screen.fill((0, 0, 0))
 
             pygame.display.quit()
             pygame.quit()
+
 
     main_menu()
 
