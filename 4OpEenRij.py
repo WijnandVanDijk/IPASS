@@ -2,14 +2,20 @@ import numpy as np
 import pygame
 import sys
 import math
+
+from pygame import mixer
 from pygame.locals import *
 
+
+COLOR = ()
 PURPLE = (75, 0, 130)
 BLUE = (29, 172, 231)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
+
+def connectfour_with_ai():
 
 def connectfour_no_ai():
 
@@ -162,15 +168,21 @@ def gui():
     screen = pygame.display.set_mode((960, 494), 0, 32)
     font = pygame.font.SysFont(None, 20)
 
+    # Achtergrond muziek wordt aangezet
+    mixer.music.load("BackgroundMusic.wav")
+    mixer.music.play(-1) # de '-1' laat de music loopen
+    pygame.mixer.music.set_volume(0.666)
+
     def draw_text(text, font, color, surface, x, y):
         textobj = font.render(text, 1, color)
         textrect = textobj.get_rect()
         textrect.topleft = (x, y)
         surface.blit(textobj, textrect)
 
-    click = False
+    klik = False
 
     def main_menu():
+        global klik
         while True:
 
 
@@ -192,20 +204,20 @@ def gui():
             button_weetjes = pygame.Rect(430, 400, 100, 50)
             button_options = pygame.Rect(620, 400, 100, 50)
             button_quit = pygame.Rect(810, 400, 100, 50)
-            if button_play.collidepoint((mx, my)):
-                if click:
+            if button_play.collidepoint(mx, my):
+                if klik:
                     connectfour_no_ai()
-            if button_overons.collidepoint((mx, my)):
-                if click:
+            if button_overons.collidepoint(mx, my):
+                if klik:
                     overons()
-            if button_weetjes.collidepoint((mx, my)):
-                if click:
+            if button_weetjes.collidepoint(mx, my):
+                if klik:
                     weetjes()
-            if button_options.collidepoint((mx, my)):
-                if click:
+            if button_options.collidepoint(mx, my):
+                if klik:
                     options()
-            if button_quit.collidepoint((mx, my)):
-                if click:
+            if button_quit.collidepoint(mx, my):
+                if klik:
                     sluiten()
             pygame.draw.rect(screen, BLUE, button_play)
             pygame.draw.rect(screen, BLUE, button_overons)
@@ -213,7 +225,7 @@ def gui():
             pygame.draw.rect(screen, BLUE, button_weetjes)
             pygame.draw.rect(screen, BLUE, button_quit)
 
-            click = False
+            klik = False
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -224,7 +236,7 @@ def gui():
                         sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
                     if event.button == 1:
-                        click = True
+                        klik = True
 
             pygame.display.update()
             mainClock.tick(60)
@@ -293,10 +305,12 @@ def gui():
                       font, WHITE, screen, 50, 230)
             draw_text("verliezen de eerste, tweede, zesde en zevende rij.",
                       font, WHITE, screen, 50, 250)
-            draw_text("Er zijn 4.531.985.219.092 mogelijk spel situaties, waarvan 1.905.333.170.621 een vier op een rij bevattten.",
-                      font, WHITE, screen, 50, 270)
-            draw_text("Er zijn 713.298.878 manieren om een vier op een rij bord weer te geven (qua steen posities)",
+            draw_text("Weetjes:",
                       font, WHITE, screen, 50, 290)
+            draw_text("Er zijn 4.531.985.219.092 mogelijk spel situaties, waarvan 1.905.333.170.621 een vier op een rij bevattten.",
+                      font, WHITE, screen, 50, 310)
+            draw_text("Er zijn 713.298.878 manieren om een vier op een rij bord weer te geven (qua steen posities)",
+                      font, WHITE, screen, 50, 330)
             draw_text("Voor de bronnen raadpleeg de README.",
                       font, WHITE, screen, 50, 400)
             for event in pygame.event.get():
@@ -311,11 +325,44 @@ def gui():
             mainClock.tick(60)
 
     def options():
+        global klik
         running = True
         while running:
             screen.fill((0, 0, 0))
 
             draw_text('Options', font, WHITE, screen, 430, 20)
+            draw_text('Muziek volume:', font, WHITE, screen, 50, 100)
+            draw_text('Uit', font, WHITE, screen, 85, 125)
+            draw_text('1', font, WHITE, screen, 90, 175)
+            draw_text('2', font, WHITE, screen, 90, 225)
+            draw_text('3', font, WHITE, screen, 90, 275)
+
+            mx, my = pygame.mouse.get_pos()
+
+            button_VOLuit = pygame.Rect(68, 140, 50, 25)
+            button_VOL1 = pygame.Rect(68, 195, 50, 25)
+            button_VOL2= pygame.Rect(68, 245, 50, 25)
+            button_VOL3 = pygame.Rect(68, 295, 50, 25)
+
+            if button_VOLuit.collidepoint(mx, my):
+                if klik:
+                    pygame.mixer.music.set_volume(0)
+            if button_VOL1.collidepoint(mx, my):
+                if klik:
+                    pygame.mixer.music.set_volume(0.333)
+            if button_VOL2.collidepoint(mx, my):
+                if klik:
+                    pygame.mixer.music.set_volume(0.666)
+            if button_VOL3.collidepoint(mx, my):
+                if klik:
+                    pygame.mixer.music.set_volume(0.999)
+
+            pygame.draw.rect(screen, BLUE, button_VOLuit)
+            pygame.draw.rect(screen, BLUE, button_VOL1)
+            pygame.draw.rect(screen, BLUE, button_VOL2)
+            pygame.draw.rect(screen, BLUE, button_VOL3)
+
+            klik = False
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
