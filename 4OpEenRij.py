@@ -35,7 +35,7 @@ def connectfour_with_ai():
     def leg_steen(bord, rij, kolom, steen):
         bord[rij][kolom] = steen
 
-    def geldige_locatie(bord, kolom):
+    def geldige_locatie_func(bord, kolom):
         return bord[aantal_rijen - 1][kolom] == 0
 
     def volgende_open_rij(bord, kolom):
@@ -72,7 +72,41 @@ def connectfour_with_ai():
                     return True
 
     def punten_positie(bord, steen):
-        pass
+        score = 0
+        for r in range(aantal_rijen):
+            rij_array = [int(i) for i in list(bord[r,:])]
+            for c in range(aantal_kolommen - 3):
+                window = rij_array[c:c + 4]
+
+                if window.count(steen) == 4:
+                    score += 100 # vier op een rij is dus 100 score
+                elif window.count(steen) == 3 and window.count(LEEG):
+                    score += 10 # drie op rij is 10 punten
+
+        return score
+
+    def get_geldige_zet(bord):
+        geldige_locatie = []
+        for kolom in range(aantal_kolommen):
+            if geldige_locatie_func(bord, kolom):
+                geldige_locatie.append(kolom)
+
+        return geldige_locatie
+
+    def kies_beste_zet(bord, steen): # geeft voorkeur aan horizontaal 3 op een rij's
+        geldige_locatie = get_geldige_zet(bord)
+        beste_score = 0
+        beste_kolom = random.choice(geldige_locatie)
+        for kolom in geldige_locatie:
+            rij = volgende_open_rij(bord,kolom)
+            tijdelijk_bord = bord.copy() # als je niet een copy maakt gebruikt hij dezelfde geheugen locatie als het 'echte' bord
+            leg_steen(tijdelijk_bord, rij, kolom, steen)
+            score = punten_positie(tijdelijk_bord, steen)
+            if score > beste_score:
+                beste_score = score
+                beste_kolom = kolom
+
+        return beste_kolom
 
     def teken_bord(bord):
         for k in range(aantal_kolommen):
@@ -135,7 +169,7 @@ def connectfour_with_ai():
                     posx = event.pos[0]
                     kolom = int(math.floor(posx / squaresize))
 
-                    if geldige_locatie(bord, kolom):
+                    if geldige_locatie_func(bord, kolom):
                         rij = volgende_open_rij(bord, kolom)
                         leg_steen(bord, rij, kolom, 1)
 
@@ -152,9 +186,10 @@ def connectfour_with_ai():
 
                 if beurd == AI and not game_over:
 
-                    kolom = random.randint(0, aantal_kolommen-1)
+                    #kolom = random.randint(0, aantal_kolommen-1)
+                    kolom = kies_beste_zet(bord, AI_STEEN)
 
-                    if geldige_locatie(bord, kolom):
+                    if geldige_locatie_func(bord, kolom):
                         pygame.time.wait(500)
                         rij = volgende_open_rij(bord, kolom)
                         leg_steen(bord, rij, kolom, 2)
@@ -174,6 +209,7 @@ def connectfour_with_ai():
                     pygame.time.wait(5000)  # in miliseconds, dus 5 seconden
                     pygame.display.quit()
                     pygame.quit()
+
 
 
 def connectfour_no_ai():
@@ -317,6 +353,7 @@ def connectfour_no_ai():
                     pygame.time.wait(5000)  # in miliseconds, dus 5 seconden
                     pygame.display.quit()
                     pygame.quit()
+
 
 
 def gui():
@@ -544,5 +581,5 @@ def gui():
     main_menu()
 
 
-#connectfour_with_ai()
+connectfour_with_ai()
 #gui()
