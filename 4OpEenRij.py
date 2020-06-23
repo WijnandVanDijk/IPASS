@@ -16,10 +16,10 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 
-def connectfour_with_ai():
+aantal_rijen = 6
+aantal_kolommen = 7
 
-    aantal_rijen = 6
-    aantal_kolommen = 7
+def connectfour_with_ai():
 
     MENS = 0
     AI = 1
@@ -71,19 +71,98 @@ def connectfour_with_ai():
                     k + 3] == steen:
                     return True
 
+    def window_score(window, steen):
+        score = 0
+        tegenstander_steen = MENS_STEEN
+        if steen == MENS_STEEN:
+            tegenstander_steen = AI_STEEN
+
+
+        if window.count(steen) == 4:
+            score += 100  # vier op een rij is dus 100 punten
+        elif window.count(steen) == 3 and window.count(LEEG) == 1:
+            score += 5  # drie op rij is 10 punten
+        elif window.count(steen) == 2 and window.count(LEEG) == 2:
+            score += 2 # twee op rij is 2 punten
+
+        if window.count(tegenstander_steen) == 3 and window.count(LEEG) == 1:
+            score -= 4
+
+        return score
+
+
     def punten_positie(bord, steen):
         score = 0
+
+        # Score voor middelste kolom (omdat die het meest mogelijkheden maakt en dus het beste is)
+        middelste_kolom_array = [int(i) for i in list(bord[:, aantal_kolommen // 2])]
+        middelste_kolom_count = middelste_kolom_array.count(steen)
+        score += middelste_kolom_count * 3
+
+        # Score Horizontaal
         for r in range(aantal_rijen):
             rij_array = [int(i) for i in list(bord[r,:])]
             for c in range(aantal_kolommen - 3):
-                window = rij_array[c:c + 4]
+                window = rij_array[c : c + 4]
+                score += window_score(window, score)
 
-                if window.count(steen) == 4:
-                    score += 100 # vier op een rij is dus 100 score
-                elif window.count(steen) == 3 and window.count(LEEG):
-                    score += 10 # drie op rij is 10 punten
+
+        # Score Verticaal
+        for k in range(aantal_kolommen):
+            kolom_array = [int(i) for i in list(bord[:, k])]
+            for r in range(aantal_kolommen - 3):
+                window = kolom_array[r : r + 4]
+                score += window_score(window, score)
+
+        # Score diagonaal van links onder naar rechts boven
+        for r in range(aantal_rijen - 3):
+            for k in range(aantal_kolommen - 3):
+                window = [bord[r+i][k+i] for i in range(4)]
+                score += window_score(window, score)
+
+        for r in range(aantal_rijen - 3):
+            for k in range(aantal_kolommen - 3):
+                window = [bord[r + 3 - i][k + i] for i in range(4)]
+                score += window_score(window, score)
+
 
         return score
+
+    def is_terminal_node(bord):
+        return winnende_zet(bord, MENS_STEEN) or winnende_zet(bord, AI_STEEN) or len(get_geldige_zet(bord)) == 0
+        # terminal node is: iemand wint of als er geen plekken meer over zijn om stenen te plaatsen
+
+    def minimax_algoritme(node, depth, maximizingplayer):  # pseudocode van: https://en.wikipedia.org/wiki/Minimax
+        geldige_locatie_func = get_geldige_zet(bord)
+        is_terminal = is_terminal_node(bord)
+        if depth == 0 or is_terminal:
+            if is_terminal:
+                if winnende_zet(bord, AI_STEEN):
+                    return 1000000
+                elif winnende_zet(bord, MENS_STEEN):
+                    return -1000000
+                else: # als er geen zetten meer mogelijk zijn
+                    return 0
+            else:
+                return punten_positie(bord, AI_STEEN)
+        if maximizingplayer:
+            value = -math.inf
+            for kolom in geldige_locatie_func:
+                rij = volgende_open_rij(bord, kolom)
+                bord_copy = bord.copy()
+                leg_steen(bord_copy, rij, kolom, AI_STEEN)
+                nieuwe_value = max(value, minimax_algoritme(bord_copy, depth - 1, False))
+                return nieuwe_value
+        else:
+            value = math.inf
+            for kolom in geldige_locatie_func:
+                rij = volgende_open_rij(bord, kolom)
+                bord_copy = bord.copy()
+                leg_steen(bord_copy, rij, kolom, MENS_STEEN)
+                nieuwe_value = min(value, minimax_algoritme(bord_copy, depth - 1, True))
+                return nieuwe_value
+
+
 
     def get_geldige_zet(bord):
         geldige_locatie = []
@@ -95,7 +174,7 @@ def connectfour_with_ai():
 
     def kies_beste_zet(bord, steen): # geeft voorkeur aan horizontaal 3 op een rij's
         geldige_locatie = get_geldige_zet(bord)
-        beste_score = 0
+        beste_score = -10000
         beste_kolom = random.choice(geldige_locatie)
         for kolom in geldige_locatie:
             rij = volgende_open_rij(bord,kolom)
@@ -213,9 +292,6 @@ def connectfour_with_ai():
 
 
 def connectfour_no_ai():
-
-    aantal_rijen = 6
-    aantal_kolommen = 7
 
     def maak_bord():
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
@@ -368,6 +444,8 @@ def gui():
     mixer.music.load("BackgroundMusic.wav")
     mixer.music.play(-1) # de '-1' laat de music loopen
     pygame.mixer.music.set_volume(0.666)
+
+    mx, my = pygame.mouse.get_pos()
 
     def draw_text(text, font, color, surface, x, y):
         textobj = font.render(text, 1, color)
@@ -524,8 +602,8 @@ def gui():
         global klik
         running = True
         while running:
-            screen.fill((0, 0, 0))
 
+            screen.fill((0, 0, 0))
             draw_text('Options', font, WHITE, screen, 430, 20)
             draw_text('Muziek volume:', font, WHITE, screen, 50, 100)
             draw_text('Uit', font, WHITE, screen, 85, 125)
@@ -539,7 +617,6 @@ def gui():
             button_VOL1 = pygame.Rect(68, 195, 50, 25)
             button_VOL2= pygame.Rect(68, 245, 50, 25)
             button_VOL3 = pygame.Rect(68, 295, 50, 25)
-
             if button_VOLuit.collidepoint(mx, my):
                 if klik:
                     pygame.mixer.music.set_volume(0)
@@ -552,7 +629,6 @@ def gui():
             if button_VOL3.collidepoint(mx, my):
                 if klik:
                     pygame.mixer.music.set_volume(0.999)
-
             pygame.draw.rect(screen, BLUE, button_VOLuit)
             pygame.draw.rect(screen, BLUE, button_VOL1)
             pygame.draw.rect(screen, BLUE, button_VOL2)
@@ -581,5 +657,6 @@ def gui():
     main_menu()
 
 
-connectfour_with_ai()
-#gui()
+#connectfour_with_ai()
+gui()
+
