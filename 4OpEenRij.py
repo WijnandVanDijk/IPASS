@@ -19,9 +19,10 @@ WHITE = (255, 255, 255)
 aantal_kolommen = 7
 aantal_rijen = 6
 
-def gui():
+def gui(): # de functie waar alles wat te maken heeft met de grafische interface in zit.
     mainClock = pygame.time.Clock()
 
+    # scherm wordt geïnitialiseerd
     pygame.init()
     pygame.display.set_caption('Hogeschool Utrecht IPASS Connect Four project, Wijnand van Dijk')
     screen = pygame.display.set_mode((960, 494), 0, 32)
@@ -30,9 +31,9 @@ def gui():
     # Achtergrond muziek wordt aangezet
     mixer.music.load("BackgroundMusic.wav")
     mixer.music.play(-1) # de '-1' laat de music loopen
-    pygame.mixer.music.set_volume(0.666)
+    pygame.mixer.music.set_volume(0.10)
 
-    def draw_text(text, font, color, surface, x, y):
+    def draw_text(text, font, color, surface, x, y): # zorg ervoor dat ik text kan maken
         textobj = font.render(text, 1, color)
         textrect = textobj.get_rect()
         textrect.topleft = (x, y)
@@ -40,7 +41,8 @@ def gui():
 
     klik = False
 
-    def main_menu():
+    def main_menu(): # main menu wordt aangemaakt. Knopen aangemaakt en functies toegewezen.
+        global event
         global klik
         while True:
 
@@ -49,6 +51,7 @@ def gui():
 
             screen.fill((0, 0, 0))
             screen.blit(LOGO, (338, 10))
+            # button text wordt aangemaakt
             draw_text('', font, WHITE, screen, 430, 20)
             draw_text('Play', font, WHITE, screen, 90, 385)
             draw_text('Over mij', font, WHITE, screen, 263, 385)
@@ -56,28 +59,39 @@ def gui():
             draw_text('Options', font, WHITE, screen, 645, 385)
             draw_text('Quit', font, WHITE, screen, 845, 385)
 
+            # mouse position tracking
             mx, my = pygame.mouse.get_pos()
 
+            # buttons worden nu 'gemaakt'
             button_play = pygame.Rect(50, 400, 100, 50)
             button_overons = pygame.Rect(240, 400, 100, 50)
             button_weetjes = pygame.Rect(430, 400, 100, 50)
             button_options = pygame.Rect(620, 400, 100, 50)
             button_quit = pygame.Rect(810, 400, 100, 50)
+
+            # functies van buttons toegewezen
             if button_play.collidepoint(mx, my):
-                if klik:
-                    gamemode_select()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        gamemode_select()
             if button_overons.collidepoint(mx, my):
-                if klik:
-                    overons()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        overons()
             if button_weetjes.collidepoint(mx, my):
-                if klik:
-                    weetjes()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        weetjes()
             if button_options.collidepoint(mx, my):
-                if klik:
-                    options()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        options()
             if button_quit.collidepoint(mx, my):
-                if klik:
-                    sluiten()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        sluiten()
+
+            # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, BLUE, button_play)
             pygame.draw.rect(screen, BLUE, button_overons)
             pygame.draw.rect(screen, BLUE, button_options)
@@ -85,7 +99,7 @@ def gui():
             pygame.draw.rect(screen, BLUE, button_quit)
 
             klik = False
-            for event in pygame.event.get():
+            for event in pygame.event.get(): # als ESC word ingedrukt gaat het 1 pagina terug, dit geld voor alle schermen die worden aangemaakt.
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
@@ -100,13 +114,14 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def overons():
+    def overons(): # Het overons scherm aangemaakt met daarin informatie over mij als persoon.
         running = True
+        global event
 
         while running:
             screen.fill((0, 0, 0))
-            ART = pygame.image.load('download.png')
-            screen.blit(ART, (720, 270))
+            ART = pygame.image.load('overmij.png') # plaatje toegevoegd voor opmaak.
+            screen.blit(ART, (720, 270)) # locatie van plaatje toegewezen
 
             draw_text('Over mij', font, WHITE, screen, 430, 20)
             draw_text("Hallo, ik ben Wijnand van Dijk maker en bedenker van dit project en eerste jaars artificial intelligence"
@@ -139,16 +154,16 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def weetjes():
-
+    def weetjes(): # weetjes aangemaakt waar weetjes worden weergegeven over connectfour en de geschiedenis van connectfour.
+        global event
         running = True
         while running:
 
-            fact = pygame.image.load('fact.png')
-            win_lose = pygame.image.load('ScreenHunter 38.jpg')
+            fact = pygame.image.load('fact.png') # plaatje toegevoegd voor opmaak.
+            win_lose = pygame.image.load('ScreenHunter 38.jpg') # plaatje toegevoegd voor opmaak.
             screen.fill((0, 0, 0))
-            screen.blit(fact, (367.5, 10))
-            screen.blit(win_lose, (710, 250))
+            screen.blit(fact, (367.5, 10)) # locatie van plaatje toegewezen
+            screen.blit(win_lose, (710, 250)) # locatie van plaatje toegewezen
 
 
 
@@ -186,7 +201,8 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def options():
+    def options(): # options pagina aangemaakt. hier kan de speler het muziek volume en de bord grote aanpassen.
+        global event
         global klik
         global aantal_rijen
         global aantal_kolommen
@@ -195,6 +211,7 @@ def gui():
 
 
             screen.fill((0, 0, 0))
+            # button text wordt aangemaakt
             draw_text('Options', font, WHITE, screen, 430, 20)
             draw_text('Muziek volume:', font, WHITE, screen, 150, 100)
             draw_text('Uit', font, WHITE, screen, 185, 125)
@@ -210,8 +227,10 @@ def gui():
             draw_text('10x7', font, WHITE, screen, 515, 125)
             draw_text('8x8', font, WHITE, screen, 520, 175)
 
+            # mouse position tracking
             mx, my = pygame.mouse.get_pos()
 
+            # buttons worden nu 'gemaakt'
             button_VOLuit = pygame.Rect(168, 145, 50, 25)
             button_VOL1 = pygame.Rect(168, 195, 50, 25)
             button_VOL2= pygame.Rect(168, 245, 50, 25)
@@ -223,57 +242,61 @@ def gui():
             button_9x7 = pygame.Rect(355, 190, 50, 25)
             button_10x7 = pygame.Rect(505, 140, 50, 25)
             button_8x8 = pygame.Rect(505, 190, 50, 25)
+
+            # functies van buttons toegewezen
             if button_VOLuit.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         pygame.mixer.music.set_volume(0)
             if button_VOL1.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
-                        pygame.mixer.music.set_volume(0.333)
+                        pygame.mixer.music.set_volume(0.05)
             if button_VOL2.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
-                        pygame.mixer.music.set_volume(0.666)
+                        pygame.mixer.music.set_volume(0.10)
             if button_VOL3.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
-                        pygame.mixer.music.set_volume(0.999)
+                        pygame.mixer.music.set_volume(0.15)
             if button_7x6.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 7
                         aantal_rijen = 6
             if button_5x4.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 5
                         aantal_rijen = 4
             if button_6x5.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 6
                         aantal_rijen = 5
             if button_8x7.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 8
                         aantal_rijen = 7
             if button_9x7.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 9
                         aantal_rijen = 7
             if button_10x7.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 10
                         aantal_rijen = 7
             if button_8x8.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         aantal_kolommen = 8
                         aantal_rijen = 8
+
+            # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, BLUE, button_VOLuit)
             pygame.draw.rect(screen, BLUE, button_VOL1)
             pygame.draw.rect(screen, BLUE, button_VOL2)
@@ -297,37 +320,46 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def sluiten():
+    def sluiten(): # sluit pygame af.
         running = True
         while running:
 
             pygame.display.quit()
             pygame.quit()
 
-    def gamemode_select():
+    def gamemode_select(): # Hier kan de speler selecteren of hij tegen een vriend/ennis wilt spelen of tegen de AI
+        global event
         running = True
         while running:
             screen.fill((0, 0, 0))
             klik = True
 
+            # button text wordt aangemaakt
             draw_text('Gamemode select', font, (255, 255, 255), screen, 430, 20)
-            draw_text('MENS VS MENS', font, WHITE, screen, 300, 247)
-            draw_text('MENS VS AI', font, WHITE, screen, 640, 247)
+            draw_text('MENS VS MENS', font, WHITE, screen, 275, 187)
+            draw_text('MENS VS AI', font, WHITE, screen, 630, 187)
 
+            # mouse position tracking
             mx, my = pygame.mouse.get_pos()
 
-            button_MENSvsMENS = pygame.Rect(250, 260, 200, 100)
-            button_MENSvsAI = pygame.Rect(580, 260, 200, 100)
+            # buttons worden nu 'gemaakt'
+            button_MENSvsMENS = pygame.Rect(230, 200, 200, 100)
+            button_MENSvsAI = pygame.Rect(580, 200, 200, 100)
+
+            # functies van buttons toegewezen
             if button_MENSvsMENS.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         connectfour_no_ai()
             if button_MENSvsAI.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         difficulty_select()
+
+            # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, BLUE, button_MENSvsMENS)
             pygame.draw.rect(screen, BLUE, button_MENSvsAI)
+
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -340,31 +372,50 @@ def gui():
             pygame.display.update()
             mainClock.tick(60)
 
-    def difficulty_select():
+    def difficulty_select(): # als de speler gekozen heeft om tegen de AI te spelen kan de speler hier de moeilijkheid kiezen.
+        global event
         running = True
         while running:
             screen.fill((0, 0, 0))
+            difi = pygame.image.load('dificulty_banner.jpg') # plaatje toegevoegd voor opmaak.
+            easy = pygame.image.load('easy.png') # plaatje toegevoegd voor opmaak.
+            medium = pygame.image.load('medium.png') # plaatje toegevoegd voor opmaak.
+            hard = pygame.image.load('hard.png') # plaatje toegevoegd voor opmaak.
+            screen.blit(difi, (400, 25)) # locatie van plaatje toegewezen
+            screen.blit(easy, (238, 227)) # locatie van plaatje toegewezen
+            screen.blit(medium, (433, 230)) # locatie van plaatje toegewezen
+            screen.blit(hard, (635, 230)) # locatie van plaatje toegewezen
             klik = True
 
             draw_text('Difficulty select', font, (255, 255, 255), screen, 430, 20)
-            draw_text('EASY', font, WHITE, screen, 300, 247)
-            draw_text('HARD', font, WHITE, screen, 660, 247)
 
+            # mouse position tracking
             mx, my = pygame.mouse.get_pos()
 
+            # buttons worden nu 'gemaakt'
+            button_easy = pygame.Rect(205, 300, 150, 75)
+            button_medium = pygame.Rect(405, 300, 150, 75)
+            button_hard = pygame.Rect(605, 300, 150, 75)
 
-            button_easy = pygame.Rect(230, 260, 200, 100)
-            button_hard = pygame.Rect(580, 260, 200, 100)
+            # functies van buttons toegewezen
             if button_easy.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         connectfour_with_ai_easy()
-            if button_easy.collidepoint(mx, my):
-                if event.type == MOUSEBUTTONDOWN:
+            if button_medium.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        connectfour_with_ai_medium()
+            if button_hard.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         connectfour_with_ai_hard()
+
+            # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, BLUE, button_easy)
+            pygame.draw.rect(screen, BLUE, button_medium)
             pygame.draw.rect(screen, BLUE, button_hard)
+
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -493,35 +544,52 @@ def connectfour_with_ai_hard(): # met minimax algoritme
         return winnende_zet(bord, MENS_STEEN) or winnende_zet(bord, AI_STEEN) or len(get_geldige_zet(bord)) == 0
         # terminal node is: iemand wint of als er geen plekken meer over zijn om stenen te plaatsen
 
-    def minimax_algoritme(node, depth, maximizingplayer):  # pseudocode van: https://en.wikipedia.org/wiki/Minimax
+    def minimax_algoritme(bord, depth, alpha, beta, maximizingplayer):  # pseudocode van: https://en.wikipedia.org/wiki/Minimax
         geldige_locatie_func = get_geldige_zet(bord)
         is_terminal = is_terminal_node(bord)
         if depth == 0 or is_terminal:
             if is_terminal:
                 if winnende_zet(bord, AI_STEEN):
-                    return 1000000
+                    return None, 1000000 # none omdat we dezelfde format nodig hebben
                 elif winnende_zet(bord, MENS_STEEN):
-                    return -1000000
+                    return None, -1000000
                 else: # als er geen zetten meer mogelijk zijn
-                    return 0
+                    return None, 0
             else:
-                return punten_positie(bord, AI_STEEN)
+                return None, punten_positie(bord, AI_STEEN)
+
         if maximizingplayer:
             value = -math.inf
+            kol =  random.choice(geldige_locatie_func)
             for kolom in geldige_locatie_func:
                 rij = volgende_open_rij(bord, kolom)
                 bord_copy = bord.copy()
                 leg_steen(bord_copy, rij, kolom, AI_STEEN)
-                nieuwe_value = max(value, minimax_algoritme(bord_copy, depth - 1, False))
-                return nieuwe_value
+                nieuwe_value = minimax_algoritme(bord_copy, depth - 1, alpha, beta,  False)[1]
+                if nieuwe_value > value:
+                    value = nieuwe_value
+                    kol = kolom
+                alpha = max(alpha, value)
+                if alpha >= beta:
+                    break
+            return kol, value
+
         else:
             value = math.inf
+            kol = random.choice(geldige_locatie_func)
             for kolom in geldige_locatie_func:
                 rij = volgende_open_rij(bord, kolom)
                 bord_copy = bord.copy()
                 leg_steen(bord_copy, rij, kolom, MENS_STEEN)
-                nieuwe_value = min(value, minimax_algoritme(bord_copy, depth - 1, True))
-                return nieuwe_value
+                nieuwe_value = minimax_algoritme(bord_copy, depth - 1, alpha, beta, True)[1]
+                if nieuwe_value < value:
+                    value = nieuwe_value
+                    kol = kolom
+                beta = min(beta, value)
+                if alpha >= beta:
+                    break
+            return kol, value
+
 
 
 
@@ -601,6 +669,7 @@ def connectfour_with_ai_hard(): # met minimax algoritme
                 posx = event.pos[0]
                 if beurd == MENS:
                     pygame.draw.circle(Gamescherm, RED, (posx, int(squaresize / 2)), radius)
+
             pygame.display.update()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -624,36 +693,37 @@ def connectfour_with_ai_hard(): # met minimax algoritme
                         print_bord(bord)
                         teken_bord(bord)
 
-                if beurd == AI and not game_over:
+        if beurd == AI and not game_over:
 
-                    #kolom = random.randint(0, aantal_kolommen-1)
-                    #kolom = kies_beste_zet(bord, AI_STEEN)
-                    kolom, minimax_score = minimax_algoritme(bord, 2, True)
+            #kolom = random.randint(0, aantal_kolommen-1)
+            #kolom = kies_beste_zet(bord, AI_STEEN)
+            kolom, minimax_score = minimax_algoritme(bord, 4, -math.inf, math.inf, True)
 
-                    if geldige_locatie_func(bord, kolom):
-                        pygame.time.wait(500)
-                        rij = volgende_open_rij(bord, kolom)
-                        leg_steen(bord, rij, kolom, 2)
+            if geldige_locatie_func(bord, kolom):
+                pygame.time.wait(500)
+                rij = volgende_open_rij(bord, kolom)
+                leg_steen(bord, rij, kolom, 2)
 
-                        if winnende_zet(bord, 2):
-                            label = myfont.render("Speler 2 wint!", 1, YELLOW)
-                            Gamescherm.blit(label, (40, 10))
-                            game_over = True
+                if winnende_zet(bord, 2):
+                    label = myfont.render("Speler 2 wint!", 1, YELLOW)
+                    Gamescherm.blit(label, (40, 10))
+                    game_over = True
 
-                        print_bord(bord)
-                        teken_bord(bord)
+                print_bord(bord)
+                teken_bord(bord)
 
-                        beurd += 1
-                        beurd = beurd % 2
+                beurd += 1
+                beurd = beurd % 2
 
-                if game_over:
-                    pygame.time.wait(5000)  # in miliseconds, dus 5 seconden
-                    pygame.display.quit()
-                    pygame.quit()
+        if game_over:
+            pygame.time.wait(10000)  # in miliseconds, dus 10 seconden
+            pygame.display.quit()
+            pygame.quit()
+            pygame.quit()
 
 
 
-def connectfour_with_ai_easy(): # zoekt naar 3 en 4 op een rij een speelt in op de tegenstander zijn zet
+def connectfour_with_ai_medium(): # zoekt naar 3 en 4 op een rij een speelt in op de tegenstander zijn zet (soms)
 
     MENS = 0
     AI = 1
@@ -861,20 +931,20 @@ def connectfour_with_ai_easy(): # zoekt naar 3 en 4 op een rij een speelt in op 
                         print_bord(bord)
                         teken_bord(bord)
 
-                if beurd == AI and not game_over:
+        if beurd == AI and not game_over:
 
-                    #kolom = random.randint(0, aantal_kolommen-1)
-                    kolom = kies_beste_zet(bord, AI_STEEN)
+            #kolom = random.randint(0, aantal_kolommen-1)
+            kolom = kies_beste_zet(bord, AI_STEEN)
 
-                    if geldige_locatie_func(bord, kolom):
-                        pygame.time.wait(500)
-                        rij = volgende_open_rij(bord, kolom)
-                        leg_steen(bord, rij, kolom, 2)
+            if geldige_locatie_func(bord, kolom):
+                pygame.time.wait(500) # milliseconde
+                rij = volgende_open_rij(bord, kolom)
+                leg_steen(bord, rij, kolom, 2)
 
-                        if winnende_zet(bord, 2):
-                            label = myfont.render("Speler 2 wint!", 1, YELLOW)
-                            Gamescherm.blit(label, (40, 10))
-                            game_over = True
+                if winnende_zet(bord, 2):
+                    label = myfont.render("Speler 2 wint!", 1, YELLOW)
+                    Gamescherm.blit(label, (40, 10))
+                    game_over = True
 
                 print_bord(bord)
                 teken_bord(bord)
@@ -882,14 +952,19 @@ def connectfour_with_ai_easy(): # zoekt naar 3 en 4 op een rij een speelt in op 
                 beurd += 1
                 beurd = beurd % 2
 
-                if game_over:
-                    pygame.time.wait(5000)  # in miliseconds, dus 5 seconden
-                    pygame.display.quit()
-                    pygame.quit()
+        if game_over:
+            pygame.time.wait(10000)  # in miliseconds, dus 10 seconden
+            pygame.display.quit()
+            pygame.quit()
+            pygame.quit()
 
 
 
-def connectfour_no_ai():
+def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de steen geplaatst wordt
+
+    global event
+    MENS = 0
+    AI = 1
 
     def maak_bord():
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
@@ -899,6 +974,156 @@ def connectfour_no_ai():
         bord[rij][kolom] = steen
 
     def geldige_locatie(bord, kolom):
+        return bord[aantal_rijen - 1][kolom] == 0
+
+    def volgende_open_rij(bord, kolom):
+        for r in range(aantal_rijen):
+            if bord[r][kolom] == 0:
+                return r
+
+    def print_bord(bord):
+        print(np.flip(bord, 0))
+
+    def winnende_zet(bord, steen):
+        for k in range(aantal_kolommen - 3):
+            for r in range(aantal_rijen):
+                if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
+                    k + 3] == steen:
+                    return True
+
+        for k in range(aantal_kolommen):
+            for r in range(aantal_rijen - 3):
+                if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
+                    k] == steen:
+                    return True
+
+        for k in range(aantal_kolommen - 3):
+            for r in range(aantal_rijen - 3):
+                if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
+                    k + 3] == steen:
+                    return True
+
+        for k in range(aantal_kolommen - 3):
+            for r in range(3, aantal_rijen):
+                if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
+                    k + 3] == steen:
+                    return True
+
+    def teken_bord(bord):
+        for k in range(aantal_kolommen):
+            for r in range(aantal_rijen):
+                pygame.draw.rect(Gamescherm, BLUE,
+                                 (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
+                pygame.draw.circle(Gamescherm, BLACK, (
+                    int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
+
+        for k in range(aantal_kolommen):
+            for r in range(aantal_rijen):
+                if bord[r][k] == 1:
+                    pygame.draw.circle(Gamescherm, RED, (
+                        int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
+                elif bord[r][k] == 2:
+                    pygame.draw.circle(Gamescherm, YELLOW, (
+                        int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
+        pygame.display.update()
+
+    bord = maak_bord()
+    print_bord(bord)
+    game_over = False
+    beurd = 0
+
+    pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
+
+    squaresize = 100  # in pixels
+
+    breedte = aantal_kolommen * squaresize
+    hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
+
+    size = (breedte, hoogte)
+
+    radius = int(squaresize / 2 - 5)
+
+    Gamescherm = pygame.display.set_mode(size)
+    teken_bord(bord)
+    pygame.display.update()
+
+    myfont = pygame.font.SysFont('monospace', 75)
+
+    beurd = random.randint(MENS, AI)
+
+    while not game_over:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+
+            if event.type == pygame.MOUSEMOTION:
+                pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
+                posx = event.pos[0]
+                if beurd == MENS:
+                    pygame.draw.circle(Gamescherm, RED, (posx, int(squaresize / 2)), radius)
+                else:
+                    pygame.draw.circle(Gamescherm, YELLOW, (posx, int(squaresize / 2)), radius)
+            pygame.display.update()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
+                if beurd == 0:
+                    posx = event.pos[0]
+                    kolom = int(math.floor(posx / squaresize))
+
+                    if geldige_locatie(bord, kolom):
+                        rij = volgende_open_rij(bord, kolom)
+                        leg_steen(bord, rij, kolom, 1)
+
+                        if winnende_zet(bord, 1):
+                            label = myfont.render("Speler 1 wint!", 1, RED)
+                            Gamescherm.blit(label, (40, 10))
+                            game_over = True
+
+                        beurd += 1
+                        beurd = beurd % 2
+
+                        print_bord(bord)
+                        teken_bord(bord)
+
+        if beurd == AI and not game_over:
+
+            kolom = random.randint(0, aantal_kolommen - 1)
+
+            if geldige_locatie(bord, kolom):
+                pygame.time.wait(500)
+                rij = volgende_open_rij(bord, kolom)
+                leg_steen(bord, rij, kolom, 2)
+
+                if winnende_zet(bord, 2):
+                    label = myfont.render("Speler 2 wint!", 1, YELLOW)
+                    Gamescherm.blit(label, (40, 10))
+                    game_over = True
+
+                print_bord(bord)
+                teken_bord(bord)
+
+            beurd += 1
+            beurd = beurd % 2
+
+        if game_over:
+            pygame.time.wait(10000)  # in miliseconds, dus 10 seconden
+            pygame.display.quit()
+            pygame.quit()
+
+
+
+def connectfour_no_ai(): # Mens tegen mens.
+
+    def maak_bord():
+        bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen.
+        return bord
+
+    def leg_steen(bord, rij, kolom, steen):
+        bord[rij][kolom] = steen
+
+    def geldige_locatie(bord, kolom): # kijkt of de locatie geldig is.
         return bord[aantal_rijen - 1][kolom] == 0
 
     def volgende_open_rij(bord, kolom):
@@ -1024,10 +1249,10 @@ def connectfour_no_ai():
                 beurd = beurd % 2
 
                 if game_over:
-                    pygame.time.wait(5000)  # in miliseconds, dus 5 seconden
+                    pygame.time.wait(10000)  # in miliseconds, dus 10 seconden
                     pygame.display.quit()
                     pygame.quit()
 
-#gui()
-connectfour_with_ai_hard()
 
+
+gui()
