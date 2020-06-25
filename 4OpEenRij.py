@@ -7,14 +7,17 @@ import random
 from pygame import mixer
 from pygame.locals import *
 
-
-COLOR = ()
-PURPLE = (75, 0, 130)
-BLUE = (29, 172, 231)
+PURPLE = (75, 0, 130) #
+LIGHT_BLUE = (29, 172, 231) #
+BLUE = (0, 0, 255) #
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
-WHITE = (255, 255, 255)
+WHITE = (255, 255, 255) #
+PINK = (255,20,147) #
+GREEN = (0,128,0) #
+ORANGE = (255,165,0) #
+COLOR = LIGHT_BLUE
 
 aantal_kolommen = 7
 aantal_rijen = 6
@@ -92,11 +95,11 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                         sluiten()
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
-            pygame.draw.rect(screen, BLUE, button_play)
-            pygame.draw.rect(screen, BLUE, button_overons)
-            pygame.draw.rect(screen, BLUE, button_options)
-            pygame.draw.rect(screen, BLUE, button_weetjes)
-            pygame.draw.rect(screen, BLUE, button_quit)
+            pygame.draw.rect(screen, COLOR, button_play)
+            pygame.draw.rect(screen, COLOR, button_overons)
+            pygame.draw.rect(screen, COLOR, button_options)
+            pygame.draw.rect(screen, COLOR, button_weetjes)
+            pygame.draw.rect(screen, COLOR, button_quit)
 
             klik = False
             for event in pygame.event.get(): # als ESC word ingedrukt gaat het 1 pagina terug, dit geld voor alle schermen die worden aangemaakt.
@@ -206,42 +209,59 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
         global klik
         global aantal_rijen
         global aantal_kolommen
+        global COLOR
         running = True
         while running:
 
 
             screen.fill((0, 0, 0))
             # button text wordt aangemaakt
-            draw_text('Options', font, WHITE, screen, 430, 20)
-            draw_text('Muziek volume:', font, WHITE, screen, 150, 100)
-            draw_text('Uit', font, WHITE, screen, 185, 125)
-            draw_text('1', font, WHITE, screen, 190, 175)
-            draw_text('2', font, WHITE, screen, 190, 225)
-            draw_text('3', font, WHITE, screen, 190, 275)
-            draw_text('Bord grote:', font, WHITE, screen, 420, 100)
-            draw_text('7x6 (standaard):', font, WHITE, screen, 407, 125)
-            draw_text('5x4', font, WHITE, screen, 445, 175)
-            draw_text('6x5', font, WHITE, screen, 445, 225)
-            draw_text('8x7', font, WHITE, screen, 370, 125)
-            draw_text('9x7', font, WHITE, screen, 370, 175)
-            draw_text('10x7', font, WHITE, screen, 515, 125)
-            draw_text('8x8', font, WHITE, screen, 520, 175)
+            draw_text('Options', font, WHITE, screen, 455, 20)
+            draw_text('Muziek volume:', font, WHITE, screen, 430, 100)
+            draw_text('Uit', font, WHITE, screen, 470, 125)
+            draw_text('1', font, WHITE, screen, 475, 175)
+            draw_text('2', font, WHITE, screen, 475, 225)
+            draw_text('3', font, WHITE, screen, 475, 275)
+            draw_text('Bord grote:', font, WHITE, screen, 150, 100)
+            draw_text('Standaard', font, WHITE, screen, 163, 125)
+            draw_text('5x4', font, WHITE, screen, 183, 175)
+            draw_text('6x5', font, WHITE, screen, 183, 225)
+            draw_text('8x7', font, WHITE, screen, 108, 125)
+            draw_text('9x7', font, WHITE, screen, 108, 175)
+            draw_text('10x7', font, WHITE, screen, 254, 125)
+            draw_text('8x8', font, WHITE, screen, 258, 175)
+            draw_text('Verander kleur:', font, WHITE, screen, 720, 100)
+            draw_text('Standaard', font, WHITE, screen, 737, 125)
+            draw_text('Blauw', font, WHITE, screen, 747, 175)
+            draw_text('Paars', font, WHITE, screen, 747, 225)
+            draw_text('Wit', font, WHITE, screen, 682, 125)
+            draw_text('Roze', font, WHITE, screen, 677, 175)
+            draw_text('Groen', font, WHITE, screen, 822, 125)
+            draw_text('Oranje', font, WHITE, screen, 822, 175)
+
 
             # mouse position tracking
             mx, my = pygame.mouse.get_pos()
 
             # buttons worden nu 'gemaakt'
-            button_VOLuit = pygame.Rect(168, 145, 50, 25)
-            button_VOL1 = pygame.Rect(168, 195, 50, 25)
-            button_VOL2= pygame.Rect(168, 245, 50, 25)
-            button_VOL3 = pygame.Rect(168, 295, 50, 25)
-            button_7x6 = pygame.Rect(430, 140, 50, 25)
-            button_5x4 = pygame.Rect(430, 190, 50, 25)
-            button_6x5 = pygame.Rect(430, 240, 50, 25)
-            button_8x7 = pygame.Rect(355, 140, 50, 25)
-            button_9x7 = pygame.Rect(355, 190, 50, 25)
-            button_10x7 = pygame.Rect(505, 140, 50, 25)
-            button_8x8 = pygame.Rect(505, 190, 50, 25)
+            button_VOLuit = pygame.Rect(455, 140, 50, 25)
+            button_VOL1 = pygame.Rect(455, 190, 50, 25)
+            button_VOL2= pygame.Rect(455, 240, 50, 25)
+            button_VOL3 = pygame.Rect(455, 290, 50, 25)
+            button_7x6 = pygame.Rect(168, 140, 50, 25)
+            button_5x4 = pygame.Rect(168, 190, 50, 25)
+            button_6x5 = pygame.Rect(168, 240, 50, 25)
+            button_8x7 = pygame.Rect(93, 140, 50, 25)
+            button_9x7 = pygame.Rect(93, 190, 50, 25)
+            button_10x7 = pygame.Rect(243, 140, 50, 25)
+            button_8x8 = pygame.Rect(243, 190, 50, 25)
+            button_LichtBlauw = pygame.Rect(742, 140, 50, 25)
+            button_Blauw = pygame.Rect(742, 190, 50, 25)
+            button_Paars = pygame.Rect(742, 240, 50, 25)
+            button_Wit = pygame.Rect(667, 140, 50, 25)
+            button_roze = pygame.Rect(667, 190, 50, 25)
+            button_groen = pygame.Rect(817, 140, 50, 25)
+            button_oranje = pygame.Rect(817, 190, 50, 25)
 
             # functies van buttons toegewezen
             if button_VOLuit.collidepoint(mx, my):
@@ -295,19 +315,56 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                     if klik:
                         aantal_kolommen = 8
                         aantal_rijen = 8
+            if button_LichtBlauw.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = LIGHT_BLUE
+            if button_Blauw.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = BLUE
+            if button_Paars.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = PURPLE
+            if button_Wit.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = WHITE
+            if button_groen.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = GREEN
+            if button_oranje.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = ORANGE
+            if button_roze.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        COLOR = PINK
+
+
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
-            pygame.draw.rect(screen, BLUE, button_VOLuit)
-            pygame.draw.rect(screen, BLUE, button_VOL1)
-            pygame.draw.rect(screen, BLUE, button_VOL2)
-            pygame.draw.rect(screen, BLUE, button_VOL3)
-            pygame.draw.rect(screen, BLUE, button_7x6)
-            pygame.draw.rect(screen, BLUE, button_5x4)
-            pygame.draw.rect(screen, BLUE, button_6x5)
-            pygame.draw.rect(screen, BLUE, button_8x7)
-            pygame.draw.rect(screen, BLUE, button_9x7)
-            pygame.draw.rect(screen, BLUE, button_10x7)
-            pygame.draw.rect(screen, BLUE, button_8x8)
+            pygame.draw.rect(screen, COLOR, button_VOLuit)
+            pygame.draw.rect(screen, COLOR, button_VOL1)
+            pygame.draw.rect(screen, COLOR, button_VOL2)
+            pygame.draw.rect(screen, COLOR, button_VOL3)
+            pygame.draw.rect(screen, COLOR, button_7x6)
+            pygame.draw.rect(screen, COLOR, button_5x4)
+            pygame.draw.rect(screen, COLOR, button_6x5)
+            pygame.draw.rect(screen, COLOR, button_8x7)
+            pygame.draw.rect(screen, COLOR, button_9x7)
+            pygame.draw.rect(screen, COLOR, button_10x7)
+            pygame.draw.rect(screen, COLOR, button_8x8)
+            pygame.draw.rect(screen, COLOR, button_LichtBlauw)
+            pygame.draw.rect(screen, COLOR, button_Blauw)
+            pygame.draw.rect(screen, COLOR, button_Paars)
+            pygame.draw.rect(screen, COLOR, button_Wit)
+            pygame.draw.rect(screen, COLOR, button_groen)
+            pygame.draw.rect(screen, COLOR, button_oranje)
+            pygame.draw.rect(screen, COLOR, button_roze)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -357,8 +414,8 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                         difficulty_select()
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
-            pygame.draw.rect(screen, BLUE, button_MENSvsMENS)
-            pygame.draw.rect(screen, BLUE, button_MENSvsAI)
+            pygame.draw.rect(screen, COLOR, button_MENSvsMENS)
+            pygame.draw.rect(screen, COLOR, button_MENSvsAI)
 
 
             for event in pygame.event.get():
@@ -412,9 +469,9 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                         connectfour_with_ai_hard()
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
-            pygame.draw.rect(screen, BLUE, button_easy)
-            pygame.draw.rect(screen, BLUE, button_medium)
-            pygame.draw.rect(screen, BLUE, button_hard)
+            pygame.draw.rect(screen, COLOR, button_easy)
+            pygame.draw.rect(screen, COLOR, button_medium)
+            pygame.draw.rect(screen, COLOR, button_hard)
 
 
             for event in pygame.event.get():
@@ -431,6 +488,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
     main_menu()
 
 
+
 def connectfour_with_ai_hard(): # met minimax algoritme
 
     MENS = 0
@@ -440,43 +498,48 @@ def connectfour_with_ai_hard(): # met minimax algoritme
     MENS_STEEN = 1
     AI_STEEN = 2
 
-    def maak_bord():
+    def maak_bord(): # bord wordt aangemaakt
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
         return bord
 
-    def leg_steen(bord, rij, kolom, steen):
+    def leg_steen(bord, rij, kolom, steen): # legt de steen.
         bord[rij][kolom] = steen
 
-    def geldige_locatie_func(bord, kolom):
-        return bord[aantal_rijen - 1][kolom] == 0
+    def geldige_locatie_func(bord, kolom): # kijkt of de locatie geldig is voor de zet.
+        return bord[aantal_rijen - 1][kolom] == 0 # kijkt of er nog minimaal 1 plek over is in de kolom.
 
-    def volgende_open_rij(bord, kolom):
+    def volgende_open_rij(bord, kolom): # kijkt op welke rij de steen gelegd wordt.
         for r in range(aantal_rijen):
-            if bord[r][kolom] == 0:
+            if bord[r][kolom] == 0: # als de plek nog een 0 is (0=leeg) de eerste 0 wordt gereturnd.
                 return r
 
-    def print_bord(bord):
+    def print_bord(bord): # flipt het bord zodat de stenen naar beneden 'vallen'.
         print(np.flip(bord, 0))
 
-    def winnende_zet(bord, steen):
-        for k in range(aantal_kolommen - 3):
+    def winnende_zet(bord, steen):  # kijkt of er een 4 op een rij is. kijkt naar alle mogelijkheden plekken waar een vier op een rij kan zijn.
+        # kijkt naar alle HORIZONTALEN locaties voor een 4 op een rij.
+        for k in range(
+                aantal_kolommen - 3):  # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(links naar rechts).
             for r in range(aantal_rijen):
                 if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
                     k + 3] == steen:
                     return True
-
+        # kijkt naar alle VERTICALEN locaties voor een 4 op een rij.
         for k in range(aantal_kolommen):
-            for r in range(aantal_rijen - 3):
+            for r in range(
+                    aantal_rijen - 3):  # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(beneden naar boven).
                 if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
                     k] == steen:
                     return True
 
+        # kijkt naar alle links-rechts boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen - 3):
                 if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle rechts-links boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(3, aantal_rijen):
                 if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
@@ -498,7 +561,7 @@ def connectfour_with_ai_hard(): # met minimax algoritme
             score += 2 # twee op rij is 2 punten
 
         if window.count(tegenstander_steen) == 3 and window.count(LEEG) == 1:
-            score -= 4
+            score -= 4 # als de tegenstander 3 op een rij heeft -4 punten
 
         return score
 
@@ -616,20 +679,20 @@ def connectfour_with_ai_hard(): # met minimax algoritme
 
         return beste_kolom
 
-    def teken_bord(bord):
+    def teken_bord(bord): # maakt het bord in PyGame.
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, BLUE,
+                pygame.draw.rect(Gamescherm, COLOR,
                                  (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
                 pygame.draw.circle(Gamescherm, BLACK, (
                     int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                if bord[r][k] == 1:
+                if bord[r][k] == 1: # wie aan de beurd is, in dit geval speler 1.
                     pygame.draw.circle(Gamescherm, RED, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
-                elif bord[r][k] == 2:
+                elif bord[r][k] == 2: # wie aan de beurd is, in dit geval speler 2.
                     pygame.draw.circle(Gamescherm, YELLOW, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
         pygame.display.update()
@@ -732,43 +795,47 @@ def connectfour_with_ai_medium(): # zoekt naar 3 en 4 op een rij een speelt in o
     MENS_STEEN = 1
     AI_STEEN = 2
 
-    def maak_bord():
+    def maak_bord(): # bord wordt aangemaakt
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
         return bord
 
-    def leg_steen(bord, rij, kolom, steen):
+    def leg_steen(bord, rij, kolom, steen): # legt de steen.
         bord[rij][kolom] = steen
 
-    def geldige_locatie_func(bord, kolom):
-        return bord[aantal_rijen - 1][kolom] == 0
+    def geldige_locatie_func(bord, kolom): # kijkt of de locatie geldig is voor de zet.
+        return bord[aantal_rijen - 1][kolom] == 0 # kijkt of er nog minimaal 1 plek over is in de kolom.
 
-    def volgende_open_rij(bord, kolom):
+    def volgende_open_rij(bord, kolom): # kijkt op welke rij de steen gelegd wordt.
         for r in range(aantal_rijen):
-            if bord[r][kolom] == 0:
+            if bord[r][kolom] == 0: # als de plek nog een 0 is (0=leeg) de eerste 0 wordt gereturnd.
                 return r
 
-    def print_bord(bord):
+    def print_bord(bord): # flipt het bord zodat de stenen naar beneden 'vallen'.
         print(np.flip(bord, 0))
 
-    def winnende_zet(bord, steen):
-        for k in range(aantal_kolommen - 3):
+    def winnende_zet(bord, steen): # kijkt of er een 4 op een rij is. kijkt naar alle mogelijkheden plekken waar een vier op een rij kan zijn.
+        # kijkt naar alle HORIZONTALEN locaties voor een 4 op een rij.
+        for k in range(aantal_kolommen - 3): # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(links naar rechts).
             for r in range(aantal_rijen):
                 if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle VERTICALEN locaties voor een 4 op een rij.
         for k in range(aantal_kolommen):
-            for r in range(aantal_rijen - 3):
+            for r in range(aantal_rijen - 3): # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(beneden naar boven).
                 if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
                     k] == steen:
                     return True
 
+        # kijkt naar alle links-rechts boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen - 3):
                 if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle rechts-links boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(3, aantal_rijen):
                 if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
@@ -790,7 +857,7 @@ def connectfour_with_ai_medium(): # zoekt naar 3 en 4 op een rij een speelt in o
             score += 2 # twee op rij is 2 punten
 
         if window.count(tegenstander_steen) == 3 and window.count(LEEG) == 1:
-            score -= 4
+            score -= 4 # als de tegenstander 3 op een rij heeft -4 punten
 
         return score
 
@@ -855,20 +922,20 @@ def connectfour_with_ai_medium(): # zoekt naar 3 en 4 op een rij een speelt in o
 
         return beste_kolom
 
-    def teken_bord(bord):
+    def teken_bord(bord): # maakt het bord in PyGame.
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, BLUE,
+                pygame.draw.rect(Gamescherm, COLOR,
                                  (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
                 pygame.draw.circle(Gamescherm, BLACK, (
                     int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                if bord[r][k] == 1:
+                if bord[r][k] == 1: # wie aan de beurd is, in dit geval speler 1.
                     pygame.draw.circle(Gamescherm, RED, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
-                elif bord[r][k] == 2:
+                elif bord[r][k] == 2: # wie aan de beurd is, in dit geval speler 2.
                     pygame.draw.circle(Gamescherm, YELLOW, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
         pygame.display.update()
@@ -966,70 +1033,77 @@ def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de st
     MENS = 0
     AI = 1
 
-    def maak_bord():
+    def maak_bord(): # bord wordt aangemaakt
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen
         return bord
 
-    def leg_steen(bord, rij, kolom, steen):
+    def leg_steen(bord, rij, kolom, steen):  # legt de steen.
         bord[rij][kolom] = steen
 
-    def geldige_locatie(bord, kolom):
-        return bord[aantal_rijen - 1][kolom] == 0
+    def geldige_locatie(bord, kolom):  # kijkt of de locatie geldig is voor de zet.
+        return bord[aantal_rijen - 1][kolom] == 0  # kijkt of er nog minimaal 1 plek over is in de kolom.
 
-    def volgende_open_rij(bord, kolom):
+    def volgende_open_rij(bord, kolom):  # kijkt op welke rij de steen gelegd wordt.
         for r in range(aantal_rijen):
-            if bord[r][kolom] == 0:
+            if bord[r][kolom] == 0:  # als de plek nog een 0 is (0=leeg) de eerste 0 wordt gereturnd.
                 return r
 
-    def print_bord(bord):
+    def print_bord(bord):  # flipt het bord zodat de stenen naar beneden 'vallen'.
         print(np.flip(bord, 0))
 
-    def winnende_zet(bord, steen):
-        for k in range(aantal_kolommen - 3):
+    def winnende_zet(bord,
+                     steen):  # kijkt of er een 4 op een rij is. kijkt naar alle mogelijkheden plekken waar een vier op een rij kan zijn.
+        # kijkt naar alle HORIZONTALEN locaties voor een 4 op een rij.
+        for k in range(
+                aantal_kolommen - 3):  # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(links naar rechts).
             for r in range(aantal_rijen):
                 if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle VERTICALEN locaties voor een 4 op een rij.
         for k in range(aantal_kolommen):
-            for r in range(aantal_rijen - 3):
+            for r in range(
+                    aantal_rijen - 3):  # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(beneden naar boven).
                 if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
                     k] == steen:
                     return True
 
+        # kijkt naar alle links-rechts boven locaties voor een 4 op een rij
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen - 3):
                 if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle rechts-links boven locaties voor een 4 op een rij
         for k in range(aantal_kolommen - 3):
             for r in range(3, aantal_rijen):
                 if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
                     k + 3] == steen:
                     return True
 
-    def teken_bord(bord):
+    def teken_bord(bord):  # maakt het bord in PyGame.
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, BLUE,
+                pygame.draw.rect(Gamescherm, COLOR,
                                  (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
                 pygame.draw.circle(Gamescherm, BLACK, (
                     int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                if bord[r][k] == 1:
+                if bord[r][k] == 1:  # wie aan de beurd is, in dit geval speler 1.
                     pygame.draw.circle(Gamescherm, RED, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
-                elif bord[r][k] == 2:
+                elif bord[r][k] == 2:  # wie aan de beurd is, in dit geval speler 2.
                     pygame.draw.circle(Gamescherm, YELLOW, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
         pygame.display.update()
 
     bord = maak_bord()
     print_bord(bord)
-    game_over = False
+    game_over = False  # zodat de main game loop kan blijven lopen, het wordt alleen True als iemand 4 vier op een rij heeft.
     beurd = 0
 
     pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
@@ -1041,7 +1115,7 @@ def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de st
 
     size = (breedte, hoogte)
 
-    radius = int(squaresize / 2 - 5)
+    radius = int(squaresize / 2 - 5)  # zorgt ervoor dat de cirkels niet aanraken.
 
     Gamescherm = pygame.display.set_mode(size)
     teken_bord(bord)
@@ -1059,7 +1133,7 @@ def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de st
 
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
-                posx = event.pos[0]
+                posx = event.pos[0]  # positie van muis.
                 if beurd == MENS:
                     pygame.draw.circle(Gamescherm, RED, (posx, int(squaresize / 2)), radius)
                 else:
@@ -1069,7 +1143,7 @@ def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de st
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
                 if beurd == 0:
-                    posx = event.pos[0]
+                    posx = event.pos[0]  # positie van muis.
                     kolom = int(math.floor(posx / squaresize))
 
                     if geldige_locatie(bord, kolom):
@@ -1116,70 +1190,74 @@ def connectfour_with_ai_easy(): # compleet random geselecteerde kolom waar de st
 
 def connectfour_no_ai(): # Mens tegen mens.
 
-    def maak_bord():
+    def maak_bord(): # bord wordt aangemaakt
         bord = np.zeros((aantal_rijen, aantal_kolommen))  # np.zeros maakt een matrix aan gevuld met nullen.
         return bord
 
-    def leg_steen(bord, rij, kolom, steen):
+    def leg_steen(bord, rij, kolom, steen): # legt de steen.
         bord[rij][kolom] = steen
 
-    def geldige_locatie(bord, kolom): # kijkt of de locatie geldig is.
-        return bord[aantal_rijen - 1][kolom] == 0
+    def geldige_locatie(bord, kolom): # kijkt of de locatie geldig is voor de zet.
+        return bord[aantal_rijen - 1][kolom] == 0 # kijkt of er nog minimaal 1 plek over is in de kolom.
 
-    def volgende_open_rij(bord, kolom):
+    def volgende_open_rij(bord, kolom): # kijkt op welke rij de steen gelegd wordt.
         for r in range(aantal_rijen):
-            if bord[r][kolom] == 0:
+            if bord[r][kolom] == 0: # als de plek nog een 0 is (0=leeg) de eerste 0 wordt gereturnd.
                 return r
 
-    def print_bord(bord):
+    def print_bord(bord): # flipt het bord zodat de stenen naar beneden 'vallen'.
         print(np.flip(bord, 0))
 
-    def winnende_zet(bord, steen):
-        for k in range(aantal_kolommen - 3):
+    def winnende_zet(bord, steen): # kijkt of er een 4 op een rij is. kijkt naar alle mogelijkheden plekken waar een vier op een rij kan zijn.
+        # kijkt naar alle HORIZONTALEN locaties voor een 4 op een rij.
+        for k in range(aantal_kolommen - 3): # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(links naar rechts).
             for r in range(aantal_rijen):
                 if bord[r][k] == steen and bord[r][k + 1] == steen and bord[r][k + 2] == steen and bord[r][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle VERTICALEN locaties voor een 4 op een rij.
         for k in range(aantal_kolommen):
-            for r in range(aantal_rijen - 3):
+            for r in range(aantal_rijen - 3): # -3 omdat je bij de laatste 3 geen vier op een rij meer kan krijgen(beneden naar boven).
                 if bord[r][k] == steen and bord[r + 1][k] == steen and bord[r + 2][k] == steen and bord[r + 3][
                     k] == steen:
                     return True
 
+        # kijkt naar alle links-rechts boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(aantal_rijen - 3):
                 if bord[r][k] == steen and bord[r + 1][k + 1] == steen and bord[r + 2][k + 2] == steen and bord[r + 3][
                     k + 3] == steen:
                     return True
 
+        # kijkt naar alle rechts-links boven locaties voor een 4 op een rij.
         for k in range(aantal_kolommen - 3):
             for r in range(3, aantal_rijen):
                 if bord[r][k] == steen and bord[r - 1][k + 1] == steen and bord[r - 2][k + 2] == steen and bord[r - 3][
                     k + 3] == steen:
                     return True
 
-    def teken_bord(bord):
+    def teken_bord(bord): # maakt het bord in PyGame.
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                pygame.draw.rect(Gamescherm, BLUE,
+                pygame.draw.rect(Gamescherm, COLOR,
                                  (k * squaresize, r * squaresize + squaresize, squaresize, squaresize))
                 pygame.draw.circle(Gamescherm, BLACK, (
                     int(k * squaresize + squaresize / 2), int(r * squaresize + squaresize + squaresize / 2)), radius)
 
         for k in range(aantal_kolommen):
             for r in range(aantal_rijen):
-                if bord[r][k] == 1:
+                if bord[r][k] == 1: # wie aan de beurd is, in dit geval speler 1.
                     pygame.draw.circle(Gamescherm, RED, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
-                elif bord[r][k] == 2:
+                elif bord[r][k] == 2: # wie aan de beurd is, in dit geval speler 2.
                     pygame.draw.circle(Gamescherm, YELLOW, (
                         int(k * squaresize + squaresize / 2), hoogte - int(r * squaresize + squaresize / 2)), radius)
         pygame.display.update()
 
     bord = maak_bord()
     print_bord(bord)
-    game_over = False
+    game_over = False # zodat de main game loop kan blijven lopen, het wordt alleen True als iemand 4 vier op een rij heeft.
     beurd = 0
 
     pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
@@ -1187,11 +1265,11 @@ def connectfour_no_ai(): # Mens tegen mens.
     squaresize = 100  # in pixels
 
     breedte = aantal_kolommen * squaresize
-    hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet
+    hoogte = (aantal_rijen + 1) * squaresize  # +1 zodat je ziet waar je de zet doet.
 
     size = (breedte, hoogte)
 
-    radius = int(squaresize / 2 - 5)
+    radius = int(squaresize / 2 - 5) # zorgt ervoor dat de cirkels niet aanraken.
 
     Gamescherm = pygame.display.set_mode(size)
     teken_bord(bord)
@@ -1207,7 +1285,7 @@ def connectfour_no_ai(): # Mens tegen mens.
 
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
-                posx = event.pos[0]
+                posx = event.pos[0] # positie van muis.
                 if beurd == 0:
                     pygame.draw.circle(Gamescherm, RED, (posx, int(squaresize / 2)), radius)
                 else:
@@ -1217,7 +1295,7 @@ def connectfour_no_ai(): # Mens tegen mens.
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(Gamescherm, BLACK, (0, 0, breedte, squaresize))
                 if beurd == 0:
-                    posx = event.pos[0]
+                    posx = event.pos[0] # positie van muis.
                     kolom = int(math.floor(posx / squaresize))
 
                     if geldige_locatie(bord, kolom):
@@ -1230,7 +1308,7 @@ def connectfour_no_ai(): # Mens tegen mens.
                             game_over = True
 
                 else:
-                    posx = event.pos[0]
+                    posx = event.pos[0] # positie van muis.
                     kolom = int(math.floor(posx / squaresize))
 
                     if geldige_locatie(bord, kolom):
@@ -1249,7 +1327,7 @@ def connectfour_no_ai(): # Mens tegen mens.
                 beurd = beurd % 2
 
                 if game_over:
-                    pygame.time.wait(10000)  # in miliseconds, dus 10 seconden
+                    pygame.time.wait(10000)  # in miliseconds, dus 10 seconden.
                     pygame.display.quit()
                     pygame.quit()
 
