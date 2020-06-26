@@ -3,6 +3,7 @@ import pygame
 import sys
 import math
 import random
+import unittest
 
 from pygame import mixer
 from pygame.locals import *
@@ -120,6 +121,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
     def overons(): # Het overons scherm aangemaakt met daarin informatie over mij als persoon.
         running = True
         global event
+        global klik
 
         while running:
             screen.fill((0, 0, 0))
@@ -146,6 +148,16 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                       font, WHITE, screen, 50, 210)
             draw_text("uit gegaan met het doel om de geschiedenis van Connect Four te weten (zie 'Weetjes') en een algoritme te vinden voor de AI-opponent.",
                       font, WHITE, screen, 50, 230)
+
+            draw_text('Terug', font, WHITE, screen, 8, 25)
+            mx, my = pygame.mouse.get_pos()
+            button_back = pygame.Rect(0, 0, 50, 25)
+            if button_back.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        running = False
+            pygame.draw.rect(screen, COLOR, button_back)
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -159,9 +171,9 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
 
     def weetjes(): # weetjes aangemaakt waar weetjes worden weergegeven over connectfour en de geschiedenis van connectfour.
         global event
+        global klik
         running = True
         while running:
-
             fact = pygame.image.load('fact.png') # plaatje toegevoegd voor opmaak.
             win_lose = pygame.image.load('ScreenHunter 38.jpg') # plaatje toegevoegd voor opmaak.
             screen.fill((0, 0, 0))
@@ -193,6 +205,16 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                       font, WHITE, screen, 50, 330)
             draw_text("Voor de bronnen raadpleeg de README.",
                       font, WHITE, screen, 50, 400)
+
+            draw_text('Terug', font, WHITE, screen, 8, 25)
+            mx, my = pygame.mouse.get_pos()
+            button_back = pygame.Rect(0, 0, 50, 25)
+            if button_back.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        running = False
+            pygame.draw.rect(screen, COLOR, button_back)
+
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -238,7 +260,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             draw_text('Roze', font, WHITE, screen, 677, 175)
             draw_text('Groen', font, WHITE, screen, 822, 125)
             draw_text('Oranje', font, WHITE, screen, 822, 175)
-
+            draw_text('Terug', font, WHITE, screen, 8, 25)
 
             # mouse position tracking
             mx, my = pygame.mouse.get_pos()
@@ -262,6 +284,8 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             button_roze = pygame.Rect(667, 190, 50, 25)
             button_groen = pygame.Rect(817, 140, 50, 25)
             button_oranje = pygame.Rect(817, 190, 50, 25)
+            button_back = pygame.Rect(0, 0, 50, 25)
+
 
             # functies van buttons toegewezen
             if button_VOLuit.collidepoint(mx, my):
@@ -343,8 +367,10 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         COLOR = PINK
-
-
+            if button_back.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        running = False
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, COLOR, button_VOLuit)
@@ -365,6 +391,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             pygame.draw.rect(screen, COLOR, button_groen)
             pygame.draw.rect(screen, COLOR, button_oranje)
             pygame.draw.rect(screen, COLOR, button_roze)
+            pygame.draw.rect(screen, COLOR, button_back)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -395,6 +422,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             draw_text('Gamemode select', font, (255, 255, 255), screen, 430, 20)
             draw_text('MENS VS MENS', font, WHITE, screen, 275, 187)
             draw_text('MENS VS AI', font, WHITE, screen, 630, 187)
+            draw_text('Terug', font, WHITE, screen, 8, 25)
 
             # mouse position tracking
             mx, my = pygame.mouse.get_pos()
@@ -402,6 +430,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             # buttons worden nu 'gemaakt'
             button_MENSvsMENS = pygame.Rect(230, 200, 200, 100)
             button_MENSvsAI = pygame.Rect(580, 200, 200, 100)
+            button_back = pygame.Rect(0, 0, 50, 25)
 
             # functies van buttons toegewezen
             if button_MENSvsMENS.collidepoint(mx, my):
@@ -412,10 +441,14 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         difficulty_select()
-
+            if button_back.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        running = False
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, COLOR, button_MENSvsMENS)
             pygame.draw.rect(screen, COLOR, button_MENSvsAI)
+            pygame.draw.rect(screen, COLOR, button_back)
 
 
             for event in pygame.event.get():
@@ -445,6 +478,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             klik = True
 
             draw_text('Difficulty select', font, (255, 255, 255), screen, 430, 20)
+            draw_text('Terug', font, WHITE, screen, 8, 25)
 
             # mouse position tracking
             mx, my = pygame.mouse.get_pos()
@@ -453,6 +487,7 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
             button_easy = pygame.Rect(205, 300, 150, 75)
             button_medium = pygame.Rect(405, 300, 150, 75)
             button_hard = pygame.Rect(605, 300, 150, 75)
+            button_back = pygame.Rect(0, 0, 50, 25)
 
             # functies van buttons toegewezen
             if button_easy.collidepoint(mx, my):
@@ -467,12 +502,16 @@ def gui(): # de functie waar alles wat te maken heeft met de grafische interface
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if klik:
                         connectfour_with_ai_hard()
+            if button_back.collidepoint(mx, my):
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if klik:
+                        running = False
 
             # hier worden de buttons getekend, anders kan je ze niet zien (ze werken dan wel)
             pygame.draw.rect(screen, COLOR, button_easy)
             pygame.draw.rect(screen, COLOR, button_medium)
             pygame.draw.rect(screen, COLOR, button_hard)
-
+            pygame.draw.rect(screen, COLOR, button_back)
 
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -595,6 +634,7 @@ def connectfour_with_ai_hard(): # met minimax algoritme
                 window = [bord[r+i][k+i] for i in range(4)]
                 score += window_score(window, score)
 
+        # Score diagonaal van rechts onder naar links boven
         for r in range(aantal_rijen - 3):
             for k in range(aantal_kolommen - 3):
                 window = [bord[r + 3 - i][k + i] for i in range(4)]
@@ -653,31 +693,13 @@ def connectfour_with_ai_hard(): # met minimax algoritme
                     break
             return kol, value
 
-
-
-
-    def get_geldige_zet(bord):
+    def get_geldige_zet(bord): # kijkt of het een mogelijk zet is. geeft een lijst van de mogelijk locaties
         geldige_locatie = []
         for kolom in range(aantal_kolommen):
             if geldige_locatie_func(bord, kolom):
                 geldige_locatie.append(kolom)
 
         return geldige_locatie
-
-    def kies_beste_zet(bord, steen): # geeft voorkeur aan horizontaal 3 op een rij's
-        geldige_locatie = get_geldige_zet(bord)
-        beste_score = -10000
-        beste_kolom = random.choice(geldige_locatie)
-        for kolom in geldige_locatie:
-            rij = volgende_open_rij(bord,kolom)
-            tijdelijk_bord = bord.copy() # als je niet een copy maakt gebruikt hij dezelfde geheugen locatie als het 'echte' bord
-            leg_steen(tijdelijk_bord, rij, kolom, steen)
-            score = punten_positie(tijdelijk_bord, steen)
-            if score > beste_score:
-                beste_score = score
-                beste_kolom = kolom
-
-        return beste_kolom
 
     def teken_bord(bord): # maakt het bord in PyGame.
         for k in range(aantal_kolommen):
@@ -700,9 +722,8 @@ def connectfour_with_ai_hard(): # met minimax algoritme
     bord = maak_bord()
     print_bord(bord)
     game_over = False
-    beurd = 0
 
-    pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html
+    pygame.init()  # bron voor pygame: https://www.pygame.org/docs/ref/draw.html initialiseerd Pygame
 
     squaresize = 100  # in pixels
 
@@ -711,15 +732,15 @@ def connectfour_with_ai_hard(): # met minimax algoritme
 
     size = (breedte, hoogte)
 
-    radius = int(squaresize / 2 - 5)
+    radius = int(squaresize / 2 - 5) # -5 zodat de cirkels niet aan elkaar vast zitten, dit is esthetisch gezien beter
 
-    Gamescherm = pygame.display.set_mode(size)
+    Gamescherm = pygame.display.set_mode(size) # zet scherm grote goed voor pygame
     teken_bord(bord)
     pygame.display.update()
 
     myfont = pygame.font.SysFont('monospace', 75)
 
-    beurd = random.randint(MENS, AI)
+    beurd = random.randint(MENS, AI) # random keuze wie eerst mag
 
     while not game_over:
 
@@ -1334,3 +1355,5 @@ def connectfour_no_ai(): # Mens tegen mens.
 
 
 gui()
+
+
